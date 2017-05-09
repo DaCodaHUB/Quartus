@@ -1,0 +1,15 @@
+module incLight (Clock, Reset, out, stop);
+	input Clock, Reset;
+	reg [2:0] ps, ns;
+	output reg [2:0] out;
+
+	assign out = ps;
+	
+	always @ (posedge clock or negedge reset)
+		if (Reset) 
+			ps <= 0;
+		else if (ps < 6)
+			begin
+				ps <= ps + 1;
+			end
+endmodule

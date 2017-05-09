@@ -1,0 +1,20 @@
+module checkOnPoint (Clock, Reset, in, column, out);
+	input Clock, Reset, spot;
+	input [7:0] column;
+	//reg ns, ps;
+	
+	output reg [1:0] out;
+	
+	always @(*)
+	case(column) 
+		5'b00100: if (spot) out = 2'b01;
+		5'b01000: if (spot) out = 2'b10;
+		5'b10000: if (spot) out = 2'b01;
+		default: if (spot) out = 2'b11;
+		default: ns = 1'bx;
+	endcase
+	
+//	always @(posedge Clock)
+//			ps <= ns;
+
+endmodule

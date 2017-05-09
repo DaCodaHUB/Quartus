@@ -1,0 +1,32 @@
+module centerLight (Clock, Reset, L, R, NL, NR, lightOn);
+	input Clock, Reset;
+	
+	 // L is true when left key is pressed, R is true when the right key
+	// is pressed, NL is true when the light on the left is on, and NR
+	// is true when the light on the right is on.
+	input L, R, NL, NR;
+	reg ns;
+	reg ps;
+	
+	// when lightOn is true, the center light should be on.
+	output lightOn;
+	parameter  on = 1'b1, off = 1'b0;
+	
+	always @(*)
+	case(ps) 
+		on: if((L)||(R))ns = off;
+			else ns = on;
+		off: if((L && NR)||(R && NL)) ns = on;
+				else ns = off;
+	endcase
+	
+	assign lightOn = (ps == on);
+	
+	always @(posedge Clock)
+		if(Reset)
+			ps <= on;
+		else
+			ps <= ns;
+	
+
+endmodule

@@ -1,0 +1,28 @@
+module tickCounter (Clock, Reset, speed);
+	input  clock, reset;
+	input  speed;
+	reg [24:0] counter_up_time;
+
+	always @ (posedge clock or negedge reset)
+	begin
+		if (!reset)
+		begin
+			counter_up_time<=0;
+		end
+		else if (enable)
+		begin
+			if ((controller==0)&&(counter_up_time<2499999))
+			begin
+				counter_up_time<=counter_up_time+1;
+			end
+			else 
+			begin
+				counter_up_time<=0;
+			end
+		end
+		else
+		begin
+			counter_up_time<=0;
+		end
+	end
+endmodule

@@ -1,0 +1,29 @@
+module LFSR (Clock, Reset, Q);
+	input Clock, Reset;
+	output [9:1]Q;
+	wire r;
+
+	assign r = Q[5] ^~ Q[9];
+	flipFlop ff1 (Q[1], P, Reset, Clock);
+	flipFlop ff2 (Q[2], Q[1], Reset, Clock);
+	flipFlop ff3 (Q[3], Q[2], Reset, Clock);
+	flipFlop ff4 (Q[4], Q[3], Reset, Clock);
+	flipFlop ff5 (Q[5], Q[4], Reset, Clock);
+	flipFlop ff6 (Q[6], Q[5], Reset, Clock);
+	flipFlop ff7 (Q[7], Q[6], Reset, Clock);
+	flipFlop ff8 (Q[8], Q[7], Reset, Clock);
+	flipFlop ff9 (Q[9], Q[8], Reset, Clock);
+
+endmodule
+
+module flipFlop (Q, D, Reset, clk);
+	output Q;
+	input D, Reset, clk;
+	reg Q;
+	
+	always @(posedge clk)
+	if (Reset)
+		Q = 0;
+	else
+		Q = D;
+endmodule

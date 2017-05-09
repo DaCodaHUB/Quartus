@@ -1,0 +1,64 @@
+module winner (Clock, Reset, L, R, NL, NR, out);
+	input Clock, Reset, L, R, NL, NR;
+	output reg[6:0] out;
+	reg [6:0] ps;
+	reg [6:0] ns;
+	
+	parameter[6:0] leftWin = 7'b0100100, rightWin = 7'b1111001, none = 7'b1111111;
+	
+	always @(*)
+	case(ps)
+		leftWin: ns = leftWin;
+		rightWin: ns = rightWin;
+		def:if(NL && L) ns = leftWin;
+			 else if(NR && R) ns = rightWin;
+			 else ns = none;
+	endcase
+	
+	assign out = ps;	
+	
+	always @(posedge Clock)
+		if(Reset)
+			ps <= none;
+		else
+			ps <= ns;
+			
+endmodule
+
+module Display_testbench();
+		reg CLOCK_50, L, R, NL, NR, Reset;
+		reg [6:0] win;
+		wire out;
+		
+		// Set up the clock.
+		Display dut (CLOCK_50, L, R, NL, NR, win);
+		parameter CLOCK_PERIOD=100;
+		initial CLOCK_50=1;
+		
+		always begin
+			#(CLOCK_PERIOD/2);
+			CLOCK_50 = ~CLOCK_50;
+		end
+
+		initial begin
+		Reset <= 1; 				 @(posedge CLOCK_50);
+		Reset <= 0; 	NL <= 0;	 @(posedge CLOCK_50);
+										 @(posedge CLOCK_50);
+										 @(posedge CLOCK_50);
+										 @(posedge CLOCK_50);
+							NL <= 1;  @(posedge CLOCK_50);
+							NR <= 0;  @(posedge CLOCK_50);
+							NR <= 1;  @(posedge CLOCK_50);
+										 @(posedge CLOCK_50);
+										 @(posedge CLOCK_50);
+										 @(posedge CLOCK_50);
+							L <= 0; 	 @(posedge CLOCK_50);
+										 @(posedge CLOCK_50);
+							L <= 1;	 @(posedge CLOCK_50);
+							R <= 0;	 @(posedge CLOCK_50);
+										 @(posedge CLOCK_50);
+							R <= 1;	 @(posedge CLOCK_50);
+										 @(posedge CLOCK_50);
+				$stop; // End the simulation.
+				end
+endmodule

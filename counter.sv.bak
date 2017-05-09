@@ -1,0 +1,22 @@
+module counter (Clock, Reset, lastLED, defeat, out);
+	input Clock, Reset, lastLED, defeat;
+	reg [2:0] ps, ns;
+	output reg [2:0] out;
+	wire [2:0] up;
+	
+	add3bits a1 (ps, 3'b001, up);
+	
+	always @(*)
+		if (lastLED && defeat)
+			ns = up;
+		else
+			ns = ps;
+	
+	assign out = ps;
+	
+	always @(posedge Clock)
+		if (Reset) 
+			ps <= 3'b0;
+		else
+			ps <= ns;
+endmodule

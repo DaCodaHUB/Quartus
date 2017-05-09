@@ -1,0 +1,101 @@
+module traffic (clk, reset, SW, LEDR); 
+	input clk, reset, [9:0] SW; 
+	output reg [9:0] LEDR; 
+
+	reg [2:0] ps; // Present State 
+	reg [2:0] ns; // Next State
+ 
+	// State encoding. 
+	parameter [2:0] A = 3'b101, B = 3'b001, C = 3'b010, D = 3'b100; 
+	
+	// Next State logic 
+	always @(*) 
+	case (SW[1:0]) 
+		2b'00: begin
+					if (ps == A) begin
+							LEDR[2:0] = C;
+							ns = C;
+					end else if (ps == A) begin
+							LEDR[2:0] = A;
+							ns = A;
+					end
+				end
+		2b'01: begin
+					if (ps == B) begin
+							LEDR[2:0] = C;
+							ns = C;
+					end else if (ps == C) begin
+							LEDR[2:0] = D;
+							ns = D;
+					end else if (ps == D) begin
+							LEDR[2:0] = B;
+							ns = B;
+					end
+				end
+		2b'10: begin
+					if (ps == D) begin
+							LEDR[2:0] = C;
+							ns = C;
+					end else if (ps == C) begin
+							LEDR[2:0] = B;
+							ns = B;
+					end else if (ps == B) begin
+							LEDR[2:0] = D;
+							ns = D;
+					end
+				end
+		default: ns = 2'bxx; 
+	endcase 
+	
+	// Output logic - could also be another always, or part of above block. 
+	assign out = (ps == C); 
+
+	// DFFs 
+	always @(posedge clk) 
+	if (reset) 
+		case (SW[1:0]) 
+		2b'00: ps <= A;
+		2b'01: ps <= B;
+		2b'10: ps <= D;
+		default: ps <= 2'bxx; 
+	endcase 
+	else 
+		ps <= ns; 
+		
+endmodule
+
+module simple_testbench();
+	reg clk, reset, [9:0] SW;
+	wire [9:0] LEDR;
+	
+	traffic dut (clk, reset, .SW, .LEDR);
+	
+	// Set up the clock.
+	parameter CLOCK_PERIOD=100;
+	initial clk=1;
+	always begin
+		#(CLOCK_PERIOD/2);
+		clk = ~clk;
+	end
+	
+	// Set up the inputs to the design. Each line is a clock cycle.
+	initial begin
+													@(posedge clk);
+		reset <= 1; 							@(posedge clk);
+		reset <= 0; SW[1:0] <= 2b'00; 	@(posedge clk);
+													@(posedge clk);
+													@(posedge clk);
+													@(posedge clk);
+						SW[1:0] <= 2b'10; 	@(posedge clk);
+						SW[1:0] <= 2b'01; 	@(posedge clk);
+						SW[1:0] <= 2b'00; 	@(posedge clk);
+						SW[1:0] <= 2b'01;		@(posedge clk);
+						SW[1:0] <= 2b'10;		@(posedge clk);
+													@(posedge clk);
+													@(posedge clk);
+													@(posedge clk);
+						SW[1:0] <= 2b'00; 	@(posedge clk);
+													@(posedge clk);
+		$stop; // End the simulation.
+	end
+endmodule

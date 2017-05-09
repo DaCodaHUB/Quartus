@@ -1,0 +1,19 @@
+module oneBank (Clock, Reset, out, stop);
+	input Clock, Reset, stop;
+	output reg [4:0] out;
+	wire max; 
+	wire [2:0] inc;
+	wire [9:0] check, checkInc; 
+	wire [8:0] random;
+	wire [7:0] lights;
+	
+	LFSR r (Clock, Reset, random);
+	add9bits aa (random, SW[8:0], check, max);
+	add9bits aa1 (check[8:0], 9'b000000001, checkInc, max);
+	
+	decoder (inc, lights);
+	
+	incLight (Clock, max, inc, stop);
+	
+	assign out = lights;
+endmodule

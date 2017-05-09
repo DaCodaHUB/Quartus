@@ -1,0 +1,63 @@
+# Reading C:/altera/14.0/modelsim_ase/tcl/vsim/pref.tcl 
+do runlab.do
+# ** Warning: (vlib-34) Library already exists at "work".
+# 
+# Model Technology ModelSim ALTERA vlog 10.1e Compiler 2013.06 Jun 12 2013
+# -- Compiling module dancingThumbs
+# -- Compiling module dancingThumbs_testbench
+# 
+# Top level modules:
+# 	dancingThumbs_testbench
+# vsim -lib work -voptargs=\"+acc\" -t 1ps dancingThumbs_testbench 
+# Loading sv_std.std
+# Loading work.dancingThumbs_testbench
+# Loading work.dancingThumbs
+# Loading work.LFSR
+# Loading work.flipFlop
+# Loading work.press
+# Loading work.oneBank
+# Loading work.cyber
+# Loading work.decoder
+# Loading work.incLight
+# Loading work.checkOnPoint
+# Loading work.score
+# Loading work.add5bits
+# Loading work.adder
+# Loading work.seg7
+# ** Warning: (vsim-3015) ./dancingThumbs.sv(90): [PCDPC] - Port size (7 or 7) does not match connection size (1) for port 'HEX8'. The port definition is at: ./dancingThumbs.sv(1).
+# 
+#         Region: /dancingThumbs_testbench/dut
+# ** Warning: (vsim-3015) ./dancingThumbs.sv(90): [PCDPC] - Port size (7 or 7) does not match connection size (1) for port 'HEX9'. The port definition is at: ./dancingThumbs.sv(1).
+# 
+#         Region: /dancingThumbs_testbench/dut
+# ** Warning: (vsim-3015) ./dancingThumbs.sv(46): [PCDPC] - Port size (3 or 3) does not match connection size (2) for port 'speed'. The port definition is at: ./oneBank.sv(1).
+# 
+#         Region: /dancingThumbs_testbench/dut/o1
+# ** Warning: (vsim-3015) ./oneBank.sv(19): [PCDPC] - Port size (2 or 2) does not match connection size (3) for port 'speed'. The port definition is at: ./incLight.sv(1).
+# 
+#         Region: /dancingThumbs_testbench/dut/o1/i
+# ** Warning: (vsim-3015) ./dancingThumbs.sv(47): [PCDPC] - Port size (3 or 3) does not match connection size (2) for port 'speed'. The port definition is at: ./oneBank.sv(1).
+# 
+#         Region: /dancingThumbs_testbench/dut/o2
+# ** Warning: (vsim-3015) ./oneBank.sv(19): [PCDPC] - Port size (2 or 2) does not match connection size (3) for port 'speed'. The port definition is at: ./incLight.sv(1).
+# 
+#         Region: /dancingThumbs_testbench/dut/o2/i
+# ** Warning: (vsim-3015) ./dancingThumbs.sv(48): [PCDPC] - Port size (3 or 3) does not match connection size (2) for port 'speed'. The port definition is at: ./oneBank.sv(1).
+# 
+#         Region: /dancingThumbs_testbench/dut/o3
+# ** Warning: (vsim-3015) ./oneBank.sv(19): [PCDPC] - Port size (2 or 2) does not match connection size (3) for port 'speed'. The port definition is at: ./incLight.sv(1).
+# 
+#         Region: /dancingThumbs_testbench/dut/o3/i
+# ** Warning: (vsim-3015) ./dancingThumbs.sv(49): [PCDPC] - Port size (3 or 3) does not match connection size (2) for port 'speed'. The port definition is at: ./oneBank.sv(1).
+# 
+#         Region: /dancingThumbs_testbench/dut/o4
+# ** Warning: (vsim-3015) ./oneBank.sv(19): [PCDPC] - Port size (2 or 2) does not match connection size (3) for port 'speed'. The port definition is at: ./incLight.sv(1).
+# 
+#         Region: /dancingThumbs_testbench/dut/o4/i
+# .main_pane.wave.interior.cs.body.pw.wf
+# .main_pane.structure.interior.cs.body.struct
+# .main_pane.objects.interior.cs.body.tree
+# Break in Module dancingThumbs_testbench at ./dancingThumbs.sv line 178
+# Simulation Breakpoint: Break in Module dancingThumbs_testbench at ./dancingThumbs.sv line 178
+# MACRO ./runlab.do PAUSED at line 25
+# Break key hit 
